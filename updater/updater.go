@@ -14,16 +14,16 @@ const (
 )
 
 func main() {
-	body := getBody(channelUrl, channelUrl)
-	frameUrl := getLink(body, frameUrlPattern)
+	bodyHtml := getBody(channelUrl, channelUrl)
+	frameUrl := getUrl(bodyHtml, frameUrlPattern)
 
-	body = getBody(frameUrl, channelUrl)
-	streamUrl := getLink(body, streamUrlPattern)
+	bodyHtml = getBody(frameUrl, channelUrl)
+	streamUrl := getUrl(bodyHtml, streamUrlPattern)
 
 	fmt.Println(streamUrl)
 }
 
-func getBody(url string, referer string) string {
+func getBody(url, referer string) (bodyHtml string) {
 	request, _ := http.NewRequest("GET", url, nil)
 	request.Header.Set("Referer", referer)
 
@@ -31,23 +31,21 @@ func getBody(url string, referer string) string {
 	resp, _ := client.Do(request)
 	defer resp.Body.Close()
 
-	bodyString := ""
 	if resp.StatusCode == 200 {
 		bodyBytes, _ := ioutil.ReadAll(resp.Body)
-		bodyString = string(bodyBytes)
+		bodyHtml = string(bodyBytes)
 	}
 
-	return bodyString
+	return
 }
 
-func getLink(body string, pattern string) string {
+func getUrl(body, pattern string) (matchedUrl string) {
 	r, _ := regexp.Compile(pattern)
 	matched := r.FindStringSubmatch(body)
 
-	streamUrl := ""
 	if len(matched) == 2 {
-		streamUrl = matched[1]
+		matchedUrl = matched[1]
 	}
 
-	return streamUrl
+	return
 }
