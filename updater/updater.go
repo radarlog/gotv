@@ -1,43 +1,45 @@
 package main
 
 import (
-    "net/http"
-    "io/ioutil"
     "fmt"
+    "io/ioutil"
+    "net/http"
+    "regexp"
 )
 
 const (
-    mezzoRequestUrl string = "http://suppor6k.bget.ru/onelike/mezzo.php"
-    mezzoRefererUrl string = "http://onelike.tv/mezzo.html"
+    mezzoRequestUrl  string = "http://suppor6k.bget.ru/onelike/mezzo.php"
+    mezzoRefererUrl  string = "http://onelike.tv/mezzo.html"
+    streamUrlPattern string = "http://s2a.privit.pro:8081/mezzo/index.m3u8\\?wmsAuthSign=(.+==)"
 )
 
 func main() {
-    html := getBody(mezzoRequestUrl, mezzoRefererUrl)
+    body := getBody(mezzoRequestUrl, mezzoRefererUrl)
 
-    fmt.Print(string(html))
+    streamUrl := getLink(body)
+
+    fmt.Println(streamUrl)
 }
 
-func getBody(url string, referer string) []byte {
-    client := http.Client{}
-
-    request, err := http.NewRequest("GET", url, nil)
-    if err != nil {
-        panic(err)
-    }
-
+func getBody(url string, referer string) string {
+    request, _ := http.NewRequest("GET", url, nil)
     request.Header.Set("Referer", referer)
 
-    response, err := client.Do(request)
-    if err != nil {
-        panic(err)
+    client := http.Client{}
+    resp, _ := client.Do(request)
+    defer resp.Body.Close()
+
+    if resp.StatusCode == 200 {
+        bodyBytes, _ := ioutil.ReadAll(resp.Body)
+        return string(bodyBytes)
     }
 
-    defer response.Body.Close()
+    return ""
+}
 
-    body, err := ioutil.ReadAll(response.Body)
-    if err != nil {
-        panic(err)
-    }
+func getLink(body string) string {
+    r, _ := regexp.Compile(streamUrlPattern)
+    streamUrl := r.FindString(body)
 
-    return body
+    return streamUrl
 }
