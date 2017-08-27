@@ -8,15 +8,17 @@ import (
 )
 
 const (
-	mezzoRequestUrl  string = "http://suppor6k.bget.ru/onelike/mezzo.php"
-	mezzoRefererUrl  string = "http://onelike.tv/mezzo.html"
-	streamUrlPattern string = "http://s2a.privit.pro:8081/mezzo/index.m3u8\\?wmsAuthSign=(.+==)"
+	channelUrl       string = "http://onelike.tv/mezzo.html"
+	frameUrlPattern  string = "<iframe .+ name=\"frame\" src=\"(https?://.+)\" .+>"
+	streamUrlPattern string = "<param name=\"flashvars\" value=\".+file=(http?://.+)\">"
 )
 
 func main() {
-	body := getBody(mezzoRequestUrl, mezzoRefererUrl)
+	body := getBody(channelUrl, channelUrl)
+	frameUrl := getLink(body, frameUrlPattern)
 
-	streamUrl := getLink(body)
+	body = getBody(frameUrl, channelUrl)
+	streamUrl := getLink(body, streamUrlPattern)
 
 	fmt.Println(streamUrl)
 }
@@ -29,17 +31,23 @@ func getBody(url string, referer string) string {
 	resp, _ := client.Do(request)
 	defer resp.Body.Close()
 
+	bodyString := ""
 	if resp.StatusCode == 200 {
 		bodyBytes, _ := ioutil.ReadAll(resp.Body)
-		return string(bodyBytes)
+		bodyString = string(bodyBytes)
 	}
 
-	return ""
+	return bodyString
 }
 
-func getLink(body string) string {
-	r, _ := regexp.Compile(streamUrlPattern)
-	streamUrl := r.FindString(body)
+func getLink(body string, pattern string) string {
+	r, _ := regexp.Compile(pattern)
+	matched := r.FindStringSubmatch(body)
+
+	streamUrl := ""
+	if len(matched) == 2 {
+		streamUrl = matched[1]
+	}
 
 	return streamUrl
 }
