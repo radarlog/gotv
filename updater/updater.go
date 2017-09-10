@@ -3,11 +3,12 @@ package main
 import (
 	"fmt"
 
-	"github.com/radarlog/iptv-wrapper/onelike"
+	"github.com/radarlog/gotv/onelike"
 )
 
 func main() {
-	streamUrl := onelike.Channel()
+	tv := onelike.Meta("src/github.com/radarlog/gotv/onelike/meta.yml")
+	channels := tv.Channels()
 
-	fmt.Println(streamUrl)
+	fmt.Println(channels)
 }

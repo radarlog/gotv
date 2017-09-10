@@ -1,44 +1,48 @@
 package onelike
 
 import (
-	"io/ioutil"
 	"log"
 	"net/http"
-	"regexp"
+	"net/url"
+
+	"github.com/PuerkitoBio/goquery"
 )
 
-const hostUrl string = "http://onelike.tv"
+func (tv Tv) Channels() map[string]*Channel {
+	for _, channel := range tv.Channel {
+		channel.getStream(tv.HostUrl)
+	}
 
-const (
-	mezzoUrl         string = hostUrl + "/mezzo.html"
-	frameUrlPattern  string = "<iframe .+ name=\"frame\" src=\"(https?://.+)\" .+>"
-	logoUrlPattern   string = "<img src=\"(/.+)\" border=\"0\" .+ width=\"70\" height=\"70\" .+>"
-	streamUrlPattern string = "<param name=\"flashvars\" value=\".+file=(http?://.+)\">"
-)
+	return tv.Channel
 
-type channel struct {
-	streamUrl string
-	logoUrl   string
 }
 
-func Channel() string {
-	mezzo := getChannel(mezzoUrl)
+func (c *Channel) getStream(referer string) error {
+	frameUrl := getFrameUrl(c.PageUrl, referer)
+	c.StreamUrl = getStreamUrl(frameUrl, c.PageUrl)
 
-	return mezzo.streamUrl
+	return nil
 }
 
-func getChannel(url string) channel {
-	bodyHtml := getBody(url, hostUrl)
-	frameUrl := getUrl(bodyHtml, frameUrlPattern)
-	logoUrl := hostUrl + getUrl(bodyHtml, logoUrlPattern)
+func getFrameUrl(pageUrl string, referer string) string {
+	html := request(pageUrl, referer)
 
-	frameHtml := getBody(frameUrl, hostUrl)
-	streamUrl := getUrl(frameHtml, streamUrlPattern)
-
-	return channel{streamUrl, logoUrl}
+	return html.Find("iframe[name=frame]").AttrOr("src", "")
 }
 
-func getBody(url, referer string) (bodyHtml string) {
+func getStreamUrl(pageUrl string, referer string) string {
+	html := request(pageUrl, referer)
+	param := html.Find("object param[name=flashvars]").AttrOr("value", "")
+
+	values, err := url.ParseQuery(param)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return values.Get("file")
+}
+
+func request(url, referer string) (html *goquery.Document) {
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -54,23 +58,11 @@ func getBody(url, referer string) (bodyHtml string) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode == 200 {
-		bodyBytes, _ := ioutil.ReadAll(resp.Body)
-		bodyHtml = string(bodyBytes)
+		html, err = goquery.NewDocumentFromReader(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	return
-}
-
-func getUrl(html, pattern string) (matchedUrl string) {
-	r, err := regexp.Compile(pattern)
-	if err != nil {
-		log.Fatal(err)
-	}
-	matched := r.FindStringSubmatch(html)
-
-	if len(matched) == 2 {
-		matchedUrl = matched[1]
-	}
-
-	return
+	return html
 }

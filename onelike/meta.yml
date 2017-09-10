@@ -1,0 +1,10 @@
+host_url: http://onelike.tv
+channels:
+    mezzo:
+        name: Mezzo
+        page_url: /mezzo.html
+        logo_url: /images/mezzo.png
+    nat-geo-wild:
+        name: Nat Geo Wild
+        page_url: /nat-geo-wild.html
+        logo_url: /images/nat-geo-wild.png
