@@ -8,20 +8,23 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (tv Tv) Channels() map[string]*Channel {
-	for _, channel := range tv.Channel {
-		channel.getStream(tv.HostUrl)
-	}
-
-	return tv.Channel
-
+type Tv struct {
+	Mezzo      Channel `yaml:"mezzo"`
+	NatGeoWild Channel `yaml:"nat-geo-wild"`
 }
 
-func (c *Channel) getStream(referer string) error {
-	frameUrl := getFrameUrl(c.PageUrl, referer)
-	c.StreamUrl = getStreamUrl(frameUrl, c.PageUrl)
+type Channel struct {
+	Name      string `yaml:"name"`
+	PageUrl   string `yaml:"page_url"`
+	LogoUrl   string `yaml:"logo_url"`
+	StreamUrl string
+}
 
-	return nil
+func (c Channel) Stream() string {
+	frameUrl := getFrameUrl(c.PageUrl, c.PageUrl)
+	streamUrl := getStreamUrl(frameUrl, c.PageUrl)
+
+	return streamUrl
 }
 
 func getFrameUrl(pageUrl string, referer string) string {

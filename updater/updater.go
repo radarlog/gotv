@@ -2,13 +2,12 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/radarlog/gotv/onelike"
 )
 
 func main() {
-	tv := onelike.Meta("src/github.com/radarlog/gotv/onelike/meta.yml")
-	channels := tv.Channels()
+	config := Meta("src/github.com/radarlog/gotv/meta.yml")
 
-	fmt.Println(channels)
+	fmt.Println(config.Tv.Onelike.Mezzo.Stream())
+	fmt.Println(config.Tv.Onelike.NatGeoWild.Stream())
+	fmt.Println(config)
 }
