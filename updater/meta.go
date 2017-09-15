@@ -10,13 +10,13 @@ import (
 )
 
 type Tv struct {
-	Onelike onelike.Tv `yaml:"onelike"`
+	Onelike map[string]onelike.Channel `yaml:"onelike"`
 }
 
 type Yaml struct {
 	HostUrl string `yaml:"host_url"`
 	LogoDir string `yaml:"logo_dir"`
-	Tv      Tv `yaml:"tv_list"`
+	Tv      Tv     `yaml:"tv_list"`
 }
 
 func Meta(metaFile string) (config Yaml) {
@@ -45,9 +45,9 @@ func (config *Yaml) parse(data []byte) error {
 		return errors.New("meta: `LogoDir` cannot be empty")
 	}
 
-	//if len(config.Tv) == 0 {
-	//	return errors.New("TV meta: No channels found")
-	//}
+	if len(config.Tv.Onelike) == 0 {
+		return errors.New("meta: No `Onelike` channels have been found")
+	}
 
 	return nil
 }

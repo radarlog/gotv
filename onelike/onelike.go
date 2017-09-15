@@ -8,11 +8,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type Tv struct {
-	Mezzo      Channel `yaml:"mezzo"`
-	NatGeoWild Channel `yaml:"nat-geo-wild"`
-}
-
 type Channel struct {
 	Name      string `yaml:"name"`
 	PageUrl   string `yaml:"page_url"`
