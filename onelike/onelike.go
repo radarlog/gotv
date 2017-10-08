@@ -8,16 +8,9 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type Channel struct {
-	Name      string `yaml:"name"`
-	PageUrl   string `yaml:"page_url"`
-	LogoUrl   string `yaml:"logo_url"`
-	StreamUrl string
-}
-
-func (c Channel) Stream() string {
-	frameUrl := getFrameUrl(c.PageUrl, c.PageUrl)
-	streamUrl := getStreamUrl(frameUrl, c.PageUrl)
+func FindStream(pageUrl string) string {
+	frameUrl := getFrameUrl(pageUrl, pageUrl)
+	streamUrl := getStreamUrl(frameUrl, pageUrl)
 
 	return streamUrl
 }

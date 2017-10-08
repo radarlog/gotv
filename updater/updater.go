@@ -2,24 +2,20 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"os"
 )
 
 func main() {
-	metaFile := flag.String("m", "meta.yml", "meta file to read configuration from")
+	metaFile := flag.String("meta", "meta.yml", "meta file to read configuration from")
+	dumpFile := flag.String("dump", "", "m3u file to dump a new playlist into")
 	flag.Parse()
 
-	config := Meta(*metaFile)
+	config := parse(*metaFile)
 
-	fmt.Println(config.Tv.Onelike["mezzo"].Stream())
-	fmt.Println(config.Tv.Onelike["nat-geo-wild"].Stream())
-
-	fmt.Println("==================================")
-
-	for name, channel := range config.Tv.Onelike {
-		fmt.Println(name)
-		fmt.Println(channel)
+	if *dumpFile != "" {
+		config.dump(*dumpFile)
+		os.Exit(0)
 	}
 
-	fmt.Println(config)
+	config.build()
 }

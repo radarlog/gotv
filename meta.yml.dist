@@ -1,6 +1,6 @@
 host_url: http://localhost:3240
 logo_dir: logos
-tv_list:
+channels:
     onelike:
         mezzo:
             name: Mezzo

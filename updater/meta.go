@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 
@@ -9,18 +10,21 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type Tv struct {
-	Onelike map[string]onelike.Channel `yaml:"onelike"`
+type Channel struct {
+	Name    string `yaml:"name"`
+	Handler string `yaml:"handler"`
+	PageUrl string `yaml:"page_url"`
+	LogoUrl string `yaml:"logo_url"`
 }
 
-type Yaml struct {
-	HostUrl string `yaml:"host_url"`
-	LogoDir string `yaml:"logo_dir"`
-	Tv      Tv     `yaml:"tv_list"`
+type meta struct {
+	HostUrl  string              `yaml:"host_url"`
+	LogoDir  string              `yaml:"logo_dir"`
+	Channels map[string]*Channel `yaml:"channels"`
 }
 
-func Meta(metaFile string) (config Yaml) {
-	data, err := ioutil.ReadFile(metaFile)
+func parse(file string) (config meta) {
+	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,21 +36,32 @@ func Meta(metaFile string) (config Yaml) {
 	return config
 }
 
-func (config *Yaml) parse(data []byte) error {
+func (config *meta) parse(data []byte) error {
 	if err := yaml.UnmarshalStrict(data, config); err != nil {
 		return err
 	}
 
 	if config.HostUrl == "" {
-		return errors.New("meta: `HostUrl` cannot be empty")
+		return errors.New("meta: `host_url` cannot be empty")
 	}
 
 	if config.LogoDir == "" {
-		return errors.New("meta: `LogoDir` cannot be empty")
+		return errors.New("meta: `logo_dir` cannot be empty")
 	}
 
-	if len(config.Tv.Onelike) == 0 {
-		return errors.New("meta: No `Onelike` channels have been found")
+	if len(config.Channels) == 0 {
+		return errors.New("meta: No `channels` have been found")
+	}
+
+	for name, channel := range config.Channels {
+		switch channel.Handler {
+		case "":
+			return errors.New(fmt.Sprintf("meta: Channel %s has no `source`", name))
+		case "onelike":
+			channel.PageUrl = onelike.FindStream(channel.PageUrl)
+		default:
+			return errors.New(fmt.Sprintf("meta: Channel %s has invalid `source`", name))
+		}
 	}
 
 	return nil
