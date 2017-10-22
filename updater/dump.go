@@ -36,18 +36,18 @@ func (config *meta) dump(file string) (err error) {
 
 	dumpList := make([]dump, 0)
 	for name, channel := range config.Channels {
-		logo, err := channel.dumpLogo(name, config.LogoDir)
-		if err != nil {
-			return err
-		}
+		if channel.PageUrl != "" {
+			logo, err := channel.dumpLogo(name, config.LogoDir)
+			if err != nil {
+				return err
+			}
 
-		dumpChannel := dump{
-			Logo:   logo,
-			Name:   channel.Name,
-			Stream: channel.PageUrl,
+			dumpList = append(dumpList, dump{
+				Logo:   logo,
+				Name:   channel.Name,
+				Stream: channel.PageUrl,
+			})
 		}
-
-		dumpList = append(dumpList, dumpChannel)
 	}
 
 	return t.Execute(f, dumpList)
