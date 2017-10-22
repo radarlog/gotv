@@ -1,12 +1,13 @@
 host_url: http://localhost:3240
 logo_dir: logos
 channels:
-    onelike:
-        mezzo:
-            name: Mezzo
-            page_url: http://onelike.tv/mezzo.html
-            logo_url: http://onelike.tv/images/mezzo.png
-        nat-geo-wild:
-            name: Nat Geo Wild
-            page_url: http://onelike.tv/nat-geo-wild.html
-            logo_url: http://onelike.tv/images/nat-geo-wild.png
+    mezzo:
+        name: Mezzo
+        handler: onelike
+        page_url: http://onelike.tv/mezzo.html
+        logo_url: http://onelike.tv/images/mezzo.png
+    nat-geo-wild:
+        name: Nat Geo Wild
+        handler: onelike
+        page_url: http://onelike.tv/nat-geo-wild.html
+        logo_url: http://onelike.tv/images/nat-geo-wild.png
