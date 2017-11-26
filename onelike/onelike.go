@@ -1,12 +1,15 @@
 package onelike
 
 import (
+	"io/ioutil"
 	"log"
 	"net/http"
-	"net/url"
+	"regexp"
 
 	"github.com/PuerkitoBio/goquery"
 )
+
+const streamUrlPattern = "(http://s[1-9]+a.privit.pro.+==)"
 
 func FindStream(pageUrl string) string {
 	frameUrl := getFrameUrl(pageUrl, pageUrl)
@@ -16,24 +19,28 @@ func FindStream(pageUrl string) string {
 }
 
 func getFrameUrl(pageUrl string, referer string) string {
-	html := request(pageUrl, referer)
-
-	return html.Find("iframe[name=frame]").AttrOr("src", "")
-}
-
-func getStreamUrl(pageUrl string, referer string) string {
-	html := request(pageUrl, referer)
-	param := html.Find("object param[name=flashvars]").AttrOr("value", "")
-
-	values, err := url.ParseQuery(param)
+	html, err := goquery.NewDocument(pageUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	return values.Get("file")
+	return html.Find("iframe[name=frame]").AttrOr("src", "")
 }
 
-func request(url, referer string) (html *goquery.Document) {
+func getStreamUrl(pageUrl string, referer string) (matchedUrl string) {
+	response := request(pageUrl, referer)
+
+	r := regexp.MustCompile(streamUrlPattern)
+	matched := r.FindStringSubmatch(response)
+
+	if len(matched) == 2 {
+		matchedUrl = matched[1]
+	}
+
+	return
+}
+
+func request(url, referer string) (html string) {
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -48,11 +55,13 @@ func request(url, referer string) (html *goquery.Document) {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 200 {
-		html, err = goquery.NewDocumentFromReader(resp.Body)
+	if resp.StatusCode == http.StatusOK {
+		bodyBite, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		html = string(bodyBite)
 	}
 
 	return html
