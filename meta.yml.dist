@@ -6,8 +6,33 @@ channels:
         handler: onelike
         page_url: http://onelike.tv/mezzo.html
         logo_url: http://onelike.tv/images/mezzo.png
+    fashion-tv:
+        name: Fashion-tv
+        handler: onelike
+        page_url: http://onelike.tv/fashion-tv.html
+        logo_url: http://onelike.tv/images/fashion-tv.png
     nat-geo-wild:
         name: Nat Geo Wild
         handler: onelike
         page_url: http://onelike.tv/nat-geo-wild.html
         logo_url: http://onelike.tv/images/nat-geo-wild.png
+    evrokino:
+        name: Evrokino
+        handler: onelike
+        page_url: http://onelike.tv/evrokino.html
+        logo_url: http://onelike.tv/images/evrokino.png
+    national-geographic:
+        name: National Geographic
+        handler: onelike
+        page_url: http://onelike.tv/national-geographic.html
+        logo_url: http://onelike.tv/images/natgeo.png
+    viasat-nature:
+        name: Viasat Nature
+        handler: onelike
+        page_url: http://onelike.tv/viasat-nature.html
+        logo_url: http://onelike.tv/images/via_nat.png
+    vh1:
+        name: Vh1
+        handler: onelike
+        page_url: http://onelike.tv/vh1.html
+        logo_url: http://onelike.tv/images/vh1.png
