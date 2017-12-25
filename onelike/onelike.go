@@ -9,7 +9,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-const streamUrlPattern = "(http://s[1-9]+a.privit.pro.+==)"
+const streamUrlPattern = "file: '(https?://.+)'"
 
 func FindStream(pageUrl string) string {
 	frameUrl := getFrameUrl(pageUrl, pageUrl)
