@@ -74,8 +74,10 @@ func (c *Channel) dumpLogo(name string, dir string) (path string, err error) {
 	response, err := http.Get(c.LogoUrl)
 	defer response.Body.Close()
 
-	// write downloaded logo to created file
-	_, err = io.Copy(file, response.Body)
+	if response.StatusCode >= 200 && response.StatusCode <= 299 {
+		// write downloaded logo to created file
+		_, err = io.Copy(file, response.Body)
+	}
 
 	return
 }
