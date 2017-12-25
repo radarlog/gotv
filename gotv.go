@@ -11,7 +11,7 @@ func main() {
 	dumpFile := flag.String("dump", "gotv.m3u", "m3u file to dump a new playlist into")
 	flag.Parse()
 
-	config := parse(*metaFile)
+	config := load(*metaFile)
 
 	count := config.dump(*dumpFile)
 	fmt.Printf("%d channels were successfully dumped to %s \n", count, *dumpFile)

@@ -10,18 +10,21 @@ import (
 	"text/template"
 )
 
-type dump struct {
-	Logo   string
-	Name   string
-	Stream string
-}
-
+// m3u file template
 const tmpl = `#EXTM3U
 {{range .}}
 #EXTINF:0 tvg-logo="{{ .Logo }}",{{ .Name }}
 {{ .Stream }}
 {{end}}`
 
+// m3u file representation
+type dump struct {
+	Logo   string
+	Name   string
+	Stream string
+}
+
+// dump the config as a m3u file and return count of successfully processed channels
 func (config *meta) dump(file string) int {
 	t, err := template.New("playlist").Parse(tmpl)
 	if err != nil {
@@ -59,29 +62,29 @@ func (config *meta) dump(file string) int {
 	return len(dumpList)
 }
 
+// fetch and dump channel's logo
 func (c *Channel) dumpLogo(name string, dir string) (path string, err error) {
 	// create logo dir
-	err = os.MkdirAll(dir, os.ModePerm)
-	if err != nil {
+	if err = os.MkdirAll(dir, os.ModePerm); err != nil {
 		return
 	}
 
 	// file name
 	path = fmt.Sprintf("%s/%s%s", dir, name, filepath.Ext(c.LogoUrl))
 
-	// create logo file
+	// create a logo file
 	file, err := os.Create(path)
 	if err != nil {
 		return
 	}
 	defer file.Close()
 
-	// download logo
+	// download a given logo
 	response, err := http.Get(c.LogoUrl)
 	defer response.Body.Close()
 
-	if response.StatusCode >= 200 && response.StatusCode <= 299 {
-		// write downloaded logo to created file
+	if response.StatusCode == http.StatusOK {
+		// write downloaded logo into the created file
 		_, err = io.Copy(file, response.Body)
 	}
 

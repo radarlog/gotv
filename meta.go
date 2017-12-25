@@ -10,6 +10,13 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// The representation of a config file
+type meta struct {
+	LogoDir  string              `yaml:"logo_dir"`
+	Channels map[string]*Channel `yaml:"channels"`
+}
+
+// The representation of a channel in the config file
 type Channel struct {
 	Name    string `yaml:"name"`
 	Source  string `yaml:"source"`
@@ -17,34 +24,28 @@ type Channel struct {
 	LogoUrl string `yaml:"logo_url"`
 }
 
-type meta struct {
-	HostUrl  string              `yaml:"host_url"`
-	LogoDir  string              `yaml:"logo_dir"`
-	Channels map[string]*Channel `yaml:"channels"`
-}
-
-func parse(file string) (config meta) {
+// load and parse a config file
+func load(file string) (config meta) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err := config.parse(data); err != nil {
+	// parse yaml
+	if err := yaml.UnmarshalStrict(data, &config); err != nil {
 		log.Fatal(err)
 	}
 
-	return config
+	if err := config.validate(); err != nil {
+		log.Fatal(err)
+	}
+
+	return
 }
 
-func (config *meta) parse(data []byte) error {
-	if err := yaml.UnmarshalStrict(data, config); err != nil {
-		return err
-	}
-
-	if config.HostUrl == "" {
-		return errors.New("meta: `host_url` cannot be empty")
-	}
-
+// perform config's validation and populate channel's stream by the corresponding source handler
+// TODO: split validation and population into two different functions
+func (config *meta) validate() error {
 	if config.LogoDir == "" {
 		return errors.New("meta: `logo_dir` cannot be empty")
 	}
