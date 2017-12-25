@@ -6,13 +6,13 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/radarlog/gotv/onelike"
+	"github.com/radarlog/gotv/sources"
 	"gopkg.in/yaml.v2"
 )
 
 type Channel struct {
 	Name    string `yaml:"name"`
-	Handler string `yaml:"handler"`
+	Source  string `yaml:"source"`
 	PageUrl string `yaml:"page_url"`
 	LogoUrl string `yaml:"logo_url"`
 }
@@ -54,11 +54,11 @@ func (config *meta) parse(data []byte) error {
 	}
 
 	for name, channel := range config.Channels {
-		switch channel.Handler {
-		case "":
-			return errors.New(fmt.Sprintf("meta: Channel %s has no `source`", name))
+		switch channel.Source {
 		case "onelike":
 			channel.PageUrl = onelike.FindStream(channel.PageUrl)
+		case "":
+			return errors.New(fmt.Sprintf("meta: Channel %s has no `source`", name))
 		default:
 			return errors.New(fmt.Sprintf("meta: Channel %s has invalid `source`", name))
 		}
