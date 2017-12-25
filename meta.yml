@@ -7,7 +7,7 @@ channels:
         page_url: http://onelike.tv/mezzo.html
         logo_url: http://onelike.tv/images/mezzo.png
     fashion-tv:
-        name: Fashion-tv
+        name: Fashion TV
         handler: onelike
         page_url: http://onelike.tv/fashion-tv.html
         logo_url: http://onelike.tv/images/fashion-tv.png

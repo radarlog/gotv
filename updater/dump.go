@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -21,16 +22,16 @@ const tmpl = `#EXTM3U
 {{ .Stream }}
 {{end}}`
 
-func (config *meta) dump(file string) (err error) {
+func (config *meta) dump(file string) int {
 	t, err := template.New("playlist").Parse(tmpl)
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
 
 	// Open a new file for writing only
 	f, err := os.OpenFile(file, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, 0644)
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
 	defer f.Close()
 
@@ -39,7 +40,7 @@ func (config *meta) dump(file string) (err error) {
 		if channel.PageUrl != "" {
 			logo, err := channel.dumpLogo(name, config.LogoDir)
 			if err != nil {
-				return err
+				log.Fatal(err)
 			}
 
 			dumpList = append(dumpList, dump{
@@ -50,7 +51,12 @@ func (config *meta) dump(file string) (err error) {
 		}
 	}
 
-	return t.Execute(f, dumpList)
+	err = t.Execute(f, dumpList)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return len(dumpList)
 }
 
 func (c *Channel) dumpLogo(name string, dir string) (path string, err error) {
