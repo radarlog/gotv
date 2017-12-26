@@ -54,8 +54,7 @@ func (config *meta) dump(file string) int {
 		}
 	}
 
-	err = t.Execute(f, dumpList)
-	if err != nil {
+	if err = t.Execute(f, dumpList); err != nil {
 		log.Fatal(err)
 	}
 
