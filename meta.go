@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/radarlog/gotv/sources"
+	"github.com/radarlog/gotv/plugins"
 	"gopkg.in/yaml.v2"
 )
 
@@ -19,7 +19,7 @@ type meta struct {
 // The representation of a channel in the config file
 type Channel struct {
 	Name    string `yaml:"name"`
-	Source  string `yaml:"source"`
+	Plugin  string `yaml:"plugin"`
 	PageUrl string `yaml:"page_url"`
 	LogoUrl string `yaml:"logo_url"`
 }
@@ -55,7 +55,7 @@ func (config *meta) validate() error {
 	}
 
 	for name, channel := range config.Channels {
-		switch channel.Source {
+		switch channel.Plugin {
 		case "onelike":
 			channel.PageUrl = onelike.FindStream(channel.PageUrl)
 		case "":
