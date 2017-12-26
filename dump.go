@@ -80,6 +80,9 @@ func (c *Channel) dumpLogo(name string, dir string) (path string, err error) {
 
 	// download a given logo
 	response, err := http.Get(c.LogoUrl)
+	if err != nil {
+		return
+	}
 	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusOK {
