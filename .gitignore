@@ -1,0 +1,5 @@
+# building folder
+/.gopath~/
+
+# binary output folder
+/bin/
