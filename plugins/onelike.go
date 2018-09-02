@@ -12,7 +12,7 @@ import (
 )
 
 // the regex pattern for finding stream out
-const streamUrlPattern = "file: '(https?://.+)'"
+const streamUrlPattern = "file:\"(https?://.+)\""
 
 // find out channel's stream by parsing its page. All the pages are organized in the same way.
 // A jQuery video player which contains a wanted stream is inserted to the page inside iframe tag,
