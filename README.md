@@ -24,8 +24,8 @@ USAGE
 ```shell
 $ gotv
 Usage of gotv:
-  -dump string
-        m3u file to dump a new playlist into (default "gotv.m3u")
-  -meta string
-        meta file to read configuration from (default "meta.yml")
+  -save string
+        m3u file to save a new playlist into (default "gotv.m3u")
+  -config string
+        config file to read configuration from (default "config.yml")
 ```

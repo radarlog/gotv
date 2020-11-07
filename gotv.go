@@ -7,14 +7,14 @@ import (
 )
 
 func main() {
-	metaFile := flag.String("meta", "meta.yml", "meta file to read configuration from")
-	dumpFile := flag.String("dump", "gotv.m3u", "m3u file to dump a new playlist into")
+	configFile := flag.String("config", "config.yml", "config file to read configuration from")
+	m3uFile := flag.String("m3u", "gotv.m3u", "m3u file to save a new playlist into")
 	flag.Parse()
 
-	config := load(*metaFile)
+	config := load(*configFile)
 
-	count := config.dump(*dumpFile)
-	fmt.Printf("%d channels were successfully dumped to %s \n", count, *dumpFile)
+	count := config.save(*m3uFile)
+	fmt.Printf("%d channels were successfully saved to %s \n", count, *m3uFile)
 
 	os.Exit(0)
 }

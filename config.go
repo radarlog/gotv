@@ -11,7 +11,7 @@ import (
 )
 
 // The representation of a config file
-type meta struct {
+type config struct {
 	LogoDir  string              `yaml:"logo_dir"`
 	Channels map[string]*Channel `yaml:"channels"`
 }
@@ -25,7 +25,7 @@ type Channel struct {
 }
 
 // load and parse a config file
-func load(file string) (config meta) {
+func load(file string) (config config) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
@@ -45,23 +45,21 @@ func load(file string) (config meta) {
 
 // perform config's validation and populate channel's stream by the corresponding source handler
 // TODO: split validation and population into two different functions
-func (config *meta) validate() error {
+func (config *config) validate() error {
 	if config.LogoDir == "" {
-		return errors.New("meta: `logo_dir` cannot be empty")
+		return errors.New("config: `logo_dir` cannot be empty")
 	}
 
 	if len(config.Channels) == 0 {
-		return errors.New("meta: No `channels` have been found")
+		return errors.New("config: No `channels` have been found")
 	}
 
 	for name, channel := range config.Channels {
 		switch channel.Plugin {
 		case "onelike":
 			channel.PageUrl = onelike.FindStream(channel.PageUrl)
-		case "":
-			return errors.New(fmt.Sprintf("meta: Channel %s has no `source`", name))
 		default:
-			return errors.New(fmt.Sprintf("meta: Channel %s has invalid `source`", name))
+			return errors.New(fmt.Sprintf("config: Channel %s has invalid `source`", name))
 		}
 	}
 

@@ -18,14 +18,14 @@ const tmpl = `#EXTM3U
 {{end}}`
 
 // m3u file representation
-type dump struct {
+type m3u struct {
 	Logo   string
 	Name   string
 	Stream string
 }
 
-// dump the config as a m3u file and return count of successfully processed channels
-func (config *meta) dump(file string) int {
+// m3u the config as a m3u file and return count of successfully processed channels
+func (config *config) save(file string) int {
 	t, err := template.New("playlist").Parse(tmpl)
 	if err != nil {
 		log.Fatal(err)
@@ -38,15 +38,15 @@ func (config *meta) dump(file string) int {
 	}
 	defer f.Close()
 
-	dumpList := make([]dump, 0)
+	saveList := make([]m3u, 0)
 	for name, channel := range config.Channels {
 		if channel.PageUrl != "" {
-			logo, err := channel.dumpLogo(name, config.LogoDir)
+			logo, err := channel.saveLogo(name, config.LogoDir)
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			dumpList = append(dumpList, dump{
+			saveList = append(saveList, m3u{
 				Logo:   logo,
 				Name:   channel.Name,
 				Stream: channel.PageUrl,
@@ -54,15 +54,15 @@ func (config *meta) dump(file string) int {
 		}
 	}
 
-	if err = t.Execute(f, dumpList); err != nil {
+	if err = t.Execute(f, saveList); err != nil {
 		log.Fatal(err)
 	}
 
-	return len(dumpList)
+	return len(saveList)
 }
 
-// fetch and dump channel's logo
-func (c *Channel) dumpLogo(name string, dir string) (path string, err error) {
+// fetch and m3u channel's logo
+func (c *Channel) saveLogo(name string, dir string) (path string, err error) {
 	// create logo dir
 	if err = os.MkdirAll(dir, os.ModePerm); err != nil {
 		return
