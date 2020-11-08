@@ -56,8 +56,8 @@ func (config *config) validate() error {
 
 	for name, channel := range config.Channels {
 		switch channel.Plugin {
-		case "onelike":
-			channel.PageUrl = onelike.FindStream(channel.PageUrl)
+		case "onlytv":
+			channel.PageUrl = onlytv.FindStream(channel.PageUrl)
 		default:
 			return errors.New(fmt.Sprintf("config: Channel %s has invalid `source`", name))
 		}

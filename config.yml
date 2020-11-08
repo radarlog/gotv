@@ -1,37 +1,53 @@
 logo_dir: logos
 channels:
     mezzo:
-        plugin: onelike
+        plugin: onlytv
         name: Mezzo
-        page_url: http://onelike.tv/mezzo.html
-        logo_url: http://onelike.tv/images/mezzo.png
+        page_url: http://only-tv.org/mezzo.html
+        logo_url: http://only-tv.org/images/mezzo.png
+    mezzo-live-hd:
+        plugin: onlytv
+        name: Mezzo Live HD
+        page_url: http://only-tv.org/mezzo-live-hd.html
+        logo_url: http://only-tv.org/images/mezzo-live-hd.png
     fashion-tv:
-        plugin: onelike
+        plugin: onlytv
         name: Fashion TV
-        page_url: http://onelike.tv/fashion-tv.html
-        logo_url: http://onelike.tv/images/fashion-tv.png
+        page_url: http://only-tv.org/fashion-tv.html
+        logo_url: http://only-tv.org/images/fashion-tv.png
     nat-geo-wild:
-        plugin: onelike
+        plugin: onlytv
         name: Nat Geo Wild
-        page_url: http://onelike.tv/nat-geo-wild.html
-        logo_url: http://onelike.tv/images/nat-geo-wild.png
+        page_url: http://only-tv.org/nat-geo-wild.html
+        logo_url: http://only-tv.org/images/natgeowild.png
     evrokino:
-        plugin: onelike
+        plugin: onlytv
         name: Evrokino
-        page_url: http://onelike.tv/evrokino.html
-        logo_url: http://onelike.tv/images/evrokino.png
+        page_url: http://only-tv.org/evrokino.html
+        logo_url: http://only-tv.org/images/eukino.png
     national-geographic:
-        plugin: onelike
+        plugin: onlytv
         name: National Geographic
-        page_url: http://onelike.tv/national-geographic.html
-        logo_url: http://onelike.tv/images/natgeo.png
+        page_url: http://only-tv.org/national-geographic.html
+        logo_url: http://only-tv.org/images/natgeo.png
     viasat-nature:
-        plugin: onelike
+        plugin: onlytv
         name: Viasat Nature
-        page_url: http://onelike.tv/viasat-nature.html
-        logo_url: http://onelike.tv/images/via_nat.png
+        page_url: http://only-tv.org/viasat-nature.html
+        logo_url: http://only-tv.org/images/viasat_nat.png
     vh1:
-        plugin: onelike
+        plugin: onlytv
         name: Vh1
-        page_url: http://onelike.tv/vh1.html
-        logo_url: http://onelike.tv/images/vh1.png
+        page_url: http://only-tv.org/vh1.html
+        logo_url: http://only-tv.org/images/vh1.png
+    world-fashion:
+        plugin: onlytv
+        name: World Fashion
+        page_url: http://only-tv.org/world-fashion.html
+        logo_url: http://only-tv.org/images/world-fashion.png
+    v-mire-zhivotnykh:
+        plugin: onlytv
+        name: В мире животных
+        page_url: http://only-tv.org/v-mire-zhivotnykh.html
+        logo_url: http://only-tv.org/images/v-mire-zhivotnykh.png
+
