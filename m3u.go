@@ -36,7 +36,6 @@ func (config *config) save(file string) int {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
 
 	saveList := make([]m3u, 0)
 	for name, channel := range config.Channels {
@@ -58,6 +57,10 @@ func (config *config) save(file string) int {
 		log.Fatal(err)
 	}
 
+	if err = f.Close(); err != nil {
+		log.Fatal(err)
+	}
+
 	return len(saveList)
 }
 
@@ -76,7 +79,6 @@ func (c *Channel) saveLogo(name string, dir string) (path string, err error) {
 	if err != nil {
 		return
 	}
-	defer file.Close()
 
 	// download a given logo
 	response, err := http.Get(c.LogoUrl)
@@ -88,6 +90,10 @@ func (c *Channel) saveLogo(name string, dir string) (path string, err error) {
 	if response.StatusCode == http.StatusOK {
 		// write downloaded logo into the created file
 		_, err = io.Copy(file, response.Body)
+
+		if err = file.Close(); err != nil {
+			return
+		}
 	}
 
 	return
