@@ -10,11 +10,6 @@ channels:
         name: Mezzo Live HD
         page_url: http://only-tv.org/mezzo-live-hd.html
         logo_url: http://only-tv.org/images/mezzo-live-hd.png
-    fashion-tv:
-        plugin: onlytv
-        name: Fashion TV
-        page_url: http://only-tv.org/fashion-tv.html
-        logo_url: http://only-tv.org/images/fashion-tv.png
     nat-geo-wild:
         plugin: onlytv
         name: Nat Geo Wild
