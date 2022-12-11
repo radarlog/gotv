@@ -1,4 +1,4 @@
-logo_dir: logos
+logo_dir: logos/
 channels:
     mezzo:
         plugin: onlytv
@@ -45,4 +45,3 @@ channels:
         name: В мире животных
         page_url: http://only-tv.org/v-mire-zhivotnykh.html
         logo_url: http://only-tv.org/images/v-mire-zhivotnykh.png
-
