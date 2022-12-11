@@ -3,11 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 
 	"github.com/radarlog/gotv/plugins"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 // The representation of a config file
@@ -26,13 +26,13 @@ type Channel struct {
 
 // load and parse a config file
 func load(file string) (config config) {
-	data, err := ioutil.ReadFile(file)
+	data, err := os.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// parse yaml
-	if err := yaml.UnmarshalStrict(data, &config); err != nil {
+	if err := yaml.Unmarshal(data, &config); err != nil {
 		log.Fatal(err)
 	}
 
