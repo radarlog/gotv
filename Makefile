@@ -21,9 +21,9 @@ config: ; $(info $(M) copying config file)
 linux: config ; $(info $(M) building linux binary)
 	GOOS=linux GOARCH=amd64 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-linux *.go
 
-.PHONY: raspberry
-raspberry: config ; $(info $(M) building raspberry binary)
-	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-raspberry *.go
+.PHONY: arm7
+arm7: config ; $(info $(M) building ARMv7 binary)
+	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-arm7 *.go
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning)
