@@ -66,13 +66,15 @@ func (config *config) save(file string) int {
 
 // fetch and m3u channel's logo
 func (c *Channel) saveLogo(name string, dir string) (path string, err error) {
+	dir = relativePath(dir)
+
 	// create logo dir
 	if err = os.MkdirAll(dir, os.ModePerm); err != nil {
 		return
 	}
 
 	// file name
-	path = fmt.Sprintf("%s/%s%s", dir, name, filepath.Ext(c.LogoUrl))
+	path = fmt.Sprintf("%s%s%s", dir, name, filepath.Ext(c.LogoUrl))
 
 	// create a logo file
 	file, err := os.Create(path)

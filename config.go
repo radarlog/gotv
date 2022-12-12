@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/radarlog/gotv/plugins"
 	"gopkg.in/yaml.v3"
@@ -64,4 +65,14 @@ func (config *config) validate() error {
 	}
 
 	return nil
+}
+
+func relativePath(p string) string {
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	path := filepath.Dir(ex)
+
+	return fmt.Sprintf("%s/%s", path, p)
 }

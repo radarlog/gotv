@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	configFile := flag.String("config", "config.yml", "config file to read configuration from")
-	m3uFile := flag.String("m3u", "gotv.m3u", "m3u file to save a new playlist into")
+	configFile := flag.String("config", relativePath("config.yml"), "config file to read configuration from")
+	m3uFile := flag.String("m3u", relativePath("gotv.m3u"), "m3u file to save a new playlist into")
 	flag.Parse()
 
 	config := load(*configFile)
