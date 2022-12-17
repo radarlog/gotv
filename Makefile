@@ -19,11 +19,11 @@ config: ; $(info $(M) copying config file)
 
 .PHONY: linux
 linux: config ; $(info $(M) building linux binary)
-	GOOS=linux GOARCH=amd64 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-linux *.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-linux *.go
 
 .PHONY: arm7
 arm7: config ; $(info $(M) building ARMv7 binary)
-	GOOS=linux GOARCH=arm GOARM=7 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-arm7 *.go
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=7 go build -ldflags ${LDFLAGS} -o ${BUILD_DIR}/${BINARY}-arm7 *.go
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning)
