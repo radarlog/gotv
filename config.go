@@ -6,24 +6,23 @@ import (
 	"os"
 	"path/filepath"
 
-	onlytv "github.com/radarlog/gotv/plugins"
 	"gopkg.in/yaml.v3"
 )
 
 // The representation of a config file
 type config struct {
-	Channels Channels `yaml:"channels"`
+	Channels channels `yaml:"channels"`
 }
 
-type Channels []Item
+type channels []item
 
-type Item struct {
+type item struct {
 	Name    string
-	Channel Channel
+	Channel channel
 }
 
 // The representation of a channel in the config file
-type Channel struct {
+type channel struct {
 	Title   string `yaml:"title"`
 	Plugin  string `yaml:"plugin"`
 	PageUrl string `yaml:"page_url"`
@@ -32,12 +31,12 @@ type Channel struct {
 
 // custom marshaling to an intermediate yaml.Node
 // https://stackoverflow.com/a/63260431
-func (channels *Channels) UnmarshalYAML(value *yaml.Node) error {
+func (channels *channels) UnmarshalYAML(value *yaml.Node) error {
 	if value.Kind != yaml.MappingNode {
 		return fmt.Errorf("Channel must contain YAML mapping, has %v", value.Kind)
 	}
 
-	*channels = make([]Item, len(value.Content)/2)
+	*channels = make([]item, len(value.Content)/2)
 
 	for i := 0; i < len(value.Content); i += 2 {
 		var res = &(*channels)[i/2]
@@ -66,29 +65,7 @@ func load(file string) (config config) {
 		log.Fatal(err)
 	}
 
-	config.validate()
-
 	return
-}
-
-// perform config's validation and populate channel's stream by the corresponding source handler
-// TODO: split validation and population into two different functions
-func (config *config) validate() {
-	if len(config.Channels) == 0 {
-		log.Fatal("config: No `channels` have been found")
-	}
-
-	for _, item := range config.Channels {
-		channel := item.Channel
-		name := item.Name
-
-		switch channel.Plugin {
-		case "onlytv":
-			channel.PageUrl = onlytv.FindStream(channel.PageUrl)
-		default:
-			log.Fatalf("config: Channel %s has invalid `source`", name)
-		}
-	}
 }
 
 func relativePath(p string) string {

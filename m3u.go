@@ -28,7 +28,7 @@ type m3u struct {
 }
 
 // m3u the config as a m3u file and return count of successfully processed channels
-func (config *config) save(file string) int {
+func (g GoTv) save(file string) int {
 	t, err := template.New("playlist").Parse(tmpl)
 	if err != nil {
 		log.Fatal(err)
@@ -41,11 +41,10 @@ func (config *config) save(file string) int {
 	}
 
 	saveList := make([]m3u, 0)
-	for _, item := range config.Channels {
-		channel := item.Channel
-		name := item.Name
-		if channel.PageUrl != "" {
-			logo, err := channel.saveLogo(name)
+	for _, channel := range g {
+
+		if channel.StreamUrl != "" {
+			logo, err := channel.saveLogo(channel.Name)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -53,7 +52,7 @@ func (config *config) save(file string) int {
 			saveList = append(saveList, m3u{
 				Logo:   logo,
 				Title:  channel.Title,
-				Stream: channel.PageUrl,
+				Stream: channel.StreamUrl,
 			})
 		}
 	}
