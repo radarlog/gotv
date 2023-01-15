@@ -1,13 +1,12 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 
-	"github.com/radarlog/gotv/plugins"
+	onlytv "github.com/radarlog/gotv/plugins"
 	"gopkg.in/yaml.v3"
 )
 
@@ -37,22 +36,20 @@ func load(file string) (config config) {
 		log.Fatal(err)
 	}
 
-	if err := config.validate(); err != nil {
-		log.Fatal(err)
-	}
+	config.validate()
 
 	return
 }
 
 // perform config's validation and populate channel's stream by the corresponding source handler
 // TODO: split validation and population into two different functions
-func (config *config) validate() error {
+func (config *config) validate() {
 	if config.LogoDir == "" {
-		return errors.New("config: `logo_dir` cannot be empty")
+		log.Fatal("config: `logo_dir` cannot be empty")
 	}
 
 	if len(config.Channels) == 0 {
-		return errors.New("config: No `channels` have been found")
+		log.Fatal("config: No `channels` have been found")
 	}
 
 	for name, channel := range config.Channels {
@@ -60,11 +57,9 @@ func (config *config) validate() error {
 		case "onlytv":
 			channel.PageUrl = onlytv.FindStream(channel.PageUrl)
 		default:
-			return errors.New(fmt.Sprintf("config: Channel %s has invalid `source`", name))
+			log.Fatalf("config: Channel %s has invalid `source`", name)
 		}
 	}
-
-	return nil
 }
 
 func relativePath(p string) string {
