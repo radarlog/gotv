@@ -19,7 +19,7 @@ type Channel struct {
 
 func main() {
 	configFile := flag.String("config", relPath("config.yml"), "config file to read configuration from")
-	m3uFile := flag.String("m3u", relPath("gotv.m3u"), "m3u file to save a new playlist into")
+	m3uFile := flag.String("m3u", relPath("gotv.m3u8"), "m3u file to save a new playlist into")
 	flag.Parse()
 
 	config := load(*configFile)
