@@ -44,13 +44,13 @@ func (g GoTv) save(file string) int {
 	for _, channel := range g {
 
 		if channel.StreamUrl != "" {
-			logo, err := channel.saveLogo(channel.Name)
+			filename, err := channel.saveLogo(channel.Name)
 			if err != nil {
 				log.Fatal(err)
 			}
 
 			saveList = append(saveList, m3u{
-				Logo:   logo,
+				Logo:   filepath.Join(LogoDir, filename),
 				Title:  channel.Title,
 				Stream: channel.StreamUrl,
 			})
@@ -69,7 +69,7 @@ func (g GoTv) save(file string) int {
 }
 
 // fetch and m3u channel's logo
-func (c *Channel) saveLogo(name string) (path string, err error) {
+func (c *Channel) saveLogo(name string) (filename string, err error) {
 	dir := relativePath(LogoDir)
 
 	// create logo dir
@@ -78,10 +78,10 @@ func (c *Channel) saveLogo(name string) (path string, err error) {
 	}
 
 	// file name
-	path = fmt.Sprintf("%s%s%s", dir, name, filepath.Ext(c.LogoUrl))
+	filename = fmt.Sprintf("%s%s", name, filepath.Ext(c.LogoUrl))
 
 	// create a logo file
-	file, err := os.Create(path)
+	file, err := os.Create(filepath.Join(dir, filename))
 	if err != nil {
 		return
 	}
