@@ -10,7 +10,6 @@ CONFIGURATION
 See `config.yml` for an example:
 
 ```yaml
-logo_dir: logos
 channels:
     mezzo:
         plugin: onlytv
