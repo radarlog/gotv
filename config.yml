@@ -1,11 +1,6 @@
 channels:
     mezzo:
         plugin: onlytv
-        title: Mezzo
-        page_url: http://only-tv.org/mezzo.html
-        logo_url: http://only-tv.org/images/mezzo.png
-    mezzo-live-hd:
-        plugin: onlytv
         title: Mezzo Live HD
         page_url: http://only-tv.org/mezzo-live-hd.html
         logo_url: http://only-tv.org/images/mezzo-live-hd.png
@@ -14,11 +9,6 @@ channels:
         title: Nat Geo Wild
         page_url: http://only-tv.org/nat-geo-wild.html
         logo_url: http://only-tv.org/images/natgeowild.png
-    evrokino:
-        plugin: onlytv
-        title: Evrokino
-        page_url: http://only-tv.org/evrokino.html
-        logo_url: http://only-tv.org/images/eukino.png
     national-geographic:
         plugin: onlytv
         title: National Geographic
@@ -34,13 +24,8 @@ channels:
         title: Vh1
         page_url: http://only-tv.org/vh1.html
         logo_url: http://only-tv.org/images/vh1.png
-    world-fashion:
+    evrokino:
         plugin: onlytv
-        title: World Fashion
-        page_url: http://only-tv.org/world-fashion.html
-        logo_url: http://only-tv.org/images/world-fashion.png
-    v-mire-zhivotnykh:
-        plugin: onlytv
-        title: В мире животных
-        page_url: http://only-tv.org/v-mire-zhivotnykh.html
-        logo_url: http://only-tv.org/images/v-mire-zhivotnykh.png
+        title: Evrokino
+        page_url: http://only-tv.org/evrokino.html
+        logo_url: http://only-tv.org/images/eukino.png
