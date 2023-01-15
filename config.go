@@ -12,7 +12,14 @@ import (
 
 // The representation of a config file
 type config struct {
-	Channels map[string]*Channel `yaml:"channels"`
+	Channels Channels `yaml:"channels"`
+}
+
+type Channels []Item
+
+type Item struct {
+	Name    string
+	Channel Channel
 }
 
 // The representation of a channel in the config file
@@ -21,6 +28,30 @@ type Channel struct {
 	Plugin  string `yaml:"plugin"`
 	PageUrl string `yaml:"page_url"`
 	LogoUrl string `yaml:"logo_url"`
+}
+
+// custom marshaling to an intermediate yaml.Node
+// https://stackoverflow.com/a/63260431
+func (channels *Channels) UnmarshalYAML(value *yaml.Node) error {
+	if value.Kind != yaml.MappingNode {
+		return fmt.Errorf("Channel must contain YAML mapping, has %v", value.Kind)
+	}
+
+	*channels = make([]Item, len(value.Content)/2)
+
+	for i := 0; i < len(value.Content); i += 2 {
+		var res = &(*channels)[i/2]
+
+		if err := value.Content[i].Decode(&res.Name); err != nil {
+			return err
+		}
+
+		if err := value.Content[i+1].Decode(&res.Channel); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // load and parse a config file
@@ -47,7 +78,10 @@ func (config *config) validate() {
 		log.Fatal("config: No `channels` have been found")
 	}
 
-	for name, channel := range config.Channels {
+	for _, item := range config.Channels {
+		channel := item.Channel
+		name := item.Name
+
 		switch channel.Plugin {
 		case "onlytv":
 			channel.PageUrl = onlytv.FindStream(channel.PageUrl)

@@ -41,7 +41,9 @@ func (config *config) save(file string) int {
 	}
 
 	saveList := make([]m3u, 0)
-	for name, channel := range config.Channels {
+	for _, item := range config.Channels {
+		channel := item.Channel
+		name := item.Name
 		if channel.PageUrl != "" {
 			logo, err := channel.saveLogo(name)
 			if err != nil {
