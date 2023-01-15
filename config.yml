@@ -1,4 +1,3 @@
-logo_dir: logos/
 channels:
     mezzo:
         plugin: onlytv

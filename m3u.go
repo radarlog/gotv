@@ -10,6 +10,9 @@ import (
 	"text/template"
 )
 
+// directory where to save channel logos
+const LogoDir = "logos/"
+
 // m3u file template
 const tmpl = `#EXTM3U
 {{range .}}
@@ -40,7 +43,7 @@ func (config *config) save(file string) int {
 	saveList := make([]m3u, 0)
 	for name, channel := range config.Channels {
 		if channel.PageUrl != "" {
-			logo, err := channel.saveLogo(name, config.LogoDir)
+			logo, err := channel.saveLogo(name)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -65,8 +68,8 @@ func (config *config) save(file string) int {
 }
 
 // fetch and m3u channel's logo
-func (c *Channel) saveLogo(name string, dir string) (path string, err error) {
-	dir = relativePath(dir)
+func (c *Channel) saveLogo(name string) (path string, err error) {
+	dir := relativePath(LogoDir)
 
 	// create logo dir
 	if err = os.MkdirAll(dir, os.ModePerm); err != nil {

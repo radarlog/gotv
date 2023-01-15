@@ -12,7 +12,6 @@ import (
 
 // The representation of a config file
 type config struct {
-	LogoDir  string              `yaml:"logo_dir"`
 	Channels map[string]*Channel `yaml:"channels"`
 }
 
@@ -44,10 +43,6 @@ func load(file string) (config config) {
 // perform config's validation and populate channel's stream by the corresponding source handler
 // TODO: split validation and population into two different functions
 func (config *config) validate() {
-	if config.LogoDir == "" {
-		log.Fatal("config: `logo_dir` cannot be empty")
-	}
-
 	if len(config.Channels) == 0 {
 		log.Fatal("config: No `channels` have been found")
 	}
