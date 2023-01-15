@@ -1,46 +1,46 @@
 channels:
     mezzo:
         plugin: onlytv
-        name: Mezzo
+        title: Mezzo
         page_url: http://only-tv.org/mezzo.html
         logo_url: http://only-tv.org/images/mezzo.png
     mezzo-live-hd:
         plugin: onlytv
-        name: Mezzo Live HD
+        title: Mezzo Live HD
         page_url: http://only-tv.org/mezzo-live-hd.html
         logo_url: http://only-tv.org/images/mezzo-live-hd.png
     nat-geo-wild:
         plugin: onlytv
-        name: Nat Geo Wild
+        title: Nat Geo Wild
         page_url: http://only-tv.org/nat-geo-wild.html
         logo_url: http://only-tv.org/images/natgeowild.png
     evrokino:
         plugin: onlytv
-        name: Evrokino
+        title: Evrokino
         page_url: http://only-tv.org/evrokino.html
         logo_url: http://only-tv.org/images/eukino.png
     national-geographic:
         plugin: onlytv
-        name: National Geographic
+        title: National Geographic
         page_url: http://only-tv.org/national-geographic.html
         logo_url: http://only-tv.org/images/natgeo.png
     viasat-nature:
         plugin: onlytv
-        name: Viasat Nature
+        title: Viasat Nature
         page_url: http://only-tv.org/viasat-nature.html
         logo_url: http://only-tv.org/images/viasat_nat.png
     vh1:
         plugin: onlytv
-        name: Vh1
+        title: Vh1
         page_url: http://only-tv.org/vh1.html
         logo_url: http://only-tv.org/images/vh1.png
     world-fashion:
         plugin: onlytv
-        name: World Fashion
+        title: World Fashion
         page_url: http://only-tv.org/world-fashion.html
         logo_url: http://only-tv.org/images/world-fashion.png
     v-mire-zhivotnykh:
         plugin: onlytv
-        name: В мире животных
+        title: В мире животных
         page_url: http://only-tv.org/v-mire-zhivotnykh.html
         logo_url: http://only-tv.org/images/v-mire-zhivotnykh.png

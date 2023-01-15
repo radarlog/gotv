@@ -17,7 +17,7 @@ type config struct {
 
 // The representation of a channel in the config file
 type Channel struct {
-	Name    string `yaml:"name"`
+	Title   string `yaml:"title"`
 	Plugin  string `yaml:"plugin"`
 	PageUrl string `yaml:"page_url"`
 	LogoUrl string `yaml:"logo_url"`

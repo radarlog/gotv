@@ -16,14 +16,14 @@ const LogoDir = "logos/"
 // m3u file template
 const tmpl = `#EXTM3U
 {{range .}}
-#EXTINF:0 tvg-logo="{{ .Logo }}",{{ .Name }}
+#EXTINF:0 tvg-logo="{{ .Logo }}",{{ .Title }}
 {{ .Stream }}
 {{end}}`
 
 // m3u file representation
 type m3u struct {
 	Logo   string
-	Name   string
+	Title  string
 	Stream string
 }
 
@@ -50,7 +50,7 @@ func (config *config) save(file string) int {
 
 			saveList = append(saveList, m3u{
 				Logo:   logo,
-				Name:   channel.Name,
+				Title:  channel.Title,
 				Stream: channel.PageUrl,
 			})
 		}
