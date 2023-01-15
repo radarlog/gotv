@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
@@ -66,14 +65,4 @@ func load(file string) (config config) {
 	}
 
 	return
-}
-
-func relativePath(p string) string {
-	ex, err := os.Executable()
-	if err != nil {
-		panic(err)
-	}
-	path := filepath.Dir(ex)
-
-	return fmt.Sprintf("%s/%s", path, p)
 }
