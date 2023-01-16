@@ -10,6 +10,7 @@ import (
 const tmpl = `#EXTM3U
 {{range .}}
 #EXTINF:0 tvg-logo="{{ .LogoUrl }}",{{ .Title }}
+#EXTVLCOPT:network-caching=2000
 {{ .StreamUrl }}
 {{end}}`
 
