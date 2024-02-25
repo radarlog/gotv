@@ -1,31 +1,36 @@
 channels:
-    mezzo:
+    mezzo-hd:
         plugin: onlytv
         title: Mezzo Live HD
-        page_url: http://only-tv.org/mezzo-live-hd.html
-        logo_url: http://only-tv.org/images/mezzo-live-hd.png
+        page_url: https://online-tv.live/mezzo-live-hd.html
+        logo_url: https://online-tv.live/images/mezzo-live-hd.png
+    mezzo:
+        plugin: onlytv
+        title: Mezzo
+        page_url: https://online-tv.live/mezzo.html
+        logo_url: https://online-tv.live/images/mezzo.png
     nat-geo-wild:
         plugin: onlytv
         title: Nat Geo Wild
-        page_url: http://only-tv.org/nat-geo-wild.html
-        logo_url: http://only-tv.org/images/natgeowild.png
+        page_url: https://online-tv.live/nat-geo-wild.html
+        logo_url: https://online-tv.live/images/natgeowild.png
     national-geographic:
         plugin: onlytv
         title: National Geographic
-        page_url: http://only-tv.org/national-geographic.html
-        logo_url: http://only-tv.org/images/natgeo.png
+        page_url: https://online-tv.live/national-geographic.html
+        logo_url: https://online-tv.live/images/natgeo.png
     viasat-nature:
         plugin: onlytv
         title: Viasat Nature
-        page_url: http://only-tv.org/viasat-nature.html
-        logo_url: http://only-tv.org/images/viasat_nat.png
-    vh1:
-        plugin: onlytv
-        title: Vh1
-        page_url: http://only-tv.org/vh1.html
-        logo_url: http://only-tv.org/images/vh1.png
+        page_url: https://online-tv.live/viasat-nature.html
+        logo_url: https://online-tv.live/images/viasat_nat.png
+    # vh1:
+    #     plugin: onlytv
+    #     title: Vh1
+    #     page_url: https://online-tv.live/vh1.html
+    #     logo_url: https://online-tv.live/images/vh1.png
     evrokino:
         plugin: onlytv
         title: Evrokino
-        page_url: http://only-tv.org/evrokino.html
-        logo_url: http://only-tv.org/images/eukino.png
+        page_url: https://online-tv.live/evrokino.html
+        logo_url: https://online-tv.live/images/eukino.png
