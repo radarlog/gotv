@@ -64,6 +64,7 @@ func request(url string, referer string) io.Reader {
 		log.Fatal(err)
 	}
 	request.Header.Set("Referer", referer)
+	request.Header.Set("User-Agent", "Mozilla/5.0 Chrome/121 GoTV")
 
 	client := http.Client{}
 	resp, err := client.Do(request)
