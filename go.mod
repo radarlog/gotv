@@ -1,13 +1,13 @@
 module github.com/radarlog/gotv
 
-go 1.19
+go 1.22
 
 require (
-	github.com/PuerkitoBio/goquery v1.8.0
+	github.com/PuerkitoBio/goquery v1.9.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
-	github.com/andybalholm/cascadia v1.3.1 // indirect
-	golang.org/x/net v0.4.0 // indirect
+	github.com/andybalholm/cascadia v1.3.2 // indirect
+	golang.org/x/net v0.21.0 // indirect
 )

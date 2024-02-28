@@ -2,7 +2,8 @@
 package onlytv
 
 import (
-	"io/ioutil"
+	"bytes"
+	"io"
 	"log"
 	"net/http"
 	"regexp"
@@ -25,7 +26,9 @@ func FindStream(pageUrl string) string {
 
 // find out an URL of the iframe
 func getFrameUrl(pageUrl string) string {
-	html, err := goquery.NewDocument(pageUrl)
+	responseBody := request(pageUrl, pageUrl)
+
+	html, err := goquery.NewDocumentFromReader(responseBody)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -35,10 +38,17 @@ func getFrameUrl(pageUrl string) string {
 
 // find out the stream inside iframe
 func getStreamUrl(frameUrl string, referer string) (matchedUrl string) {
-	response := request(frameUrl, referer)
+	responseBody := request(frameUrl, referer)
+
+	bodyBite, err := io.ReadAll(responseBody)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	html := string(bodyBite)
 
 	r := regexp.MustCompile(streamUrlPattern)
-	matched := r.FindStringSubmatch(response)
+	matched := r.FindStringSubmatch(html)
 
 	if len(matched) == 2 {
 		matchedUrl = matched[1]
@@ -48,7 +58,7 @@ func getStreamUrl(frameUrl string, referer string) (matchedUrl string) {
 }
 
 // iframe's URL is accessible only from channel's page, so it needs to be passed as a referer
-func request(url, referer string) (html string) {
+func request(url string, referer string) io.Reader {
 	request, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -63,14 +73,14 @@ func request(url, referer string) (html string) {
 
 	defer resp.Body.Close()
 
-	if resp.StatusCode == http.StatusOK {
-		bodyBite, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		html = string(bodyBite)
+	if resp.StatusCode != http.StatusOK {
+		log.Fatalf("Status code error: %d %s", resp.StatusCode, resp.Status)
 	}
 
-	return html
+	bodyBites, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return bytes.NewReader(bodyBites)
 }
