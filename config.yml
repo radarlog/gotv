@@ -1,36 +1,31 @@
 channels:
-    mezzo-hd:
-        plugin: onlytv
-        title: Mezzo Live HD
-        page_url: https://online-tv.live/mezzo-live-hd.html
-        logo_url: https://online-tv.live/images/mezzo-live-hd.png
-    mezzo:
-        plugin: onlytv
-        title: Mezzo
-        page_url: https://online-tv.live/mezzo.html
-        logo_url: https://online-tv.live/images/mezzo.png
-    nat-geo-wild:
-        plugin: onlytv
-        title: Nat Geo Wild
-        page_url: https://online-tv.live/nat-geo-wild.html
-        logo_url: https://online-tv.live/images/natgeowild.png
-    national-geographic:
-        plugin: onlytv
-        title: National Geographic
-        page_url: https://online-tv.live/national-geographic.html
-        logo_url: https://online-tv.live/images/natgeo.png
-    viasat-nature:
-        plugin: onlytv
-        title: Viasat Nature
-        page_url: https://online-tv.live/viasat-nature.html
-        logo_url: https://online-tv.live/images/viasat_nat.png
-    # vh1:
-    #     plugin: onlytv
-    #     title: Vh1
-    #     page_url: https://online-tv.live/vh1.html
-    #     logo_url: https://online-tv.live/images/vh1.png
-    evrokino:
-        plugin: onlytv
-        title: Evrokino
-        page_url: https://online-tv.live/evrokino.html
-        logo_url: https://online-tv.live/images/eukino.png
+  mezzo-hd:
+    plugin: teliklive
+    title: Mezzo Live HD
+    page_url: https://telik.live/mezzo-live-hd.html
+    logo_url: https://telik.live/images/mezzo-live-hd.png
+  mezzo:
+    plugin: teliklive
+    title: Mezzo
+    page_url: https://telik.live/mezzo.html
+    logo_url: https://telik.live/images/mezzo.png
+  nat-geo-wild:
+    plugin: teliklive
+    title: Nat Geo Wild
+    page_url: https://telik.live/nat-geo-wild.html
+    logo_url: https://telik.live/images/nat-geo-wild.png
+  national-geographic:
+    plugin: teliklive
+    title: National Geographic
+    page_url: https://telik.live/national-geographic.html
+    logo_url: https://telik.live/images/national-geographic.png
+  viasat-nature:
+    plugin: teliklive
+    title: Viasat Nature
+    page_url: https://telik.live/viasat-nature.html
+    logo_url: https://telik.live/images/viasat-nature.png
+  cartoon-network:
+    plugin: teliklive
+    title: Cartoon Network
+    page_url: https://telik.live/cartoon-network.html
+    logo_url: https://telik.live/images/cartoon-network.png

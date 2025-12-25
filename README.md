@@ -2,7 +2,7 @@ GoTV
 ====
 
 GoTV is an open source app for generating m3u playlists from different sources.
-Currently only sources from http://only-tv.org are supported.
+Currently only sources from https://telik.live/ are supported.
 
 CONFIGURATION
 -------------
@@ -12,10 +12,10 @@ See `config.yml` for an example:
 ```yaml
 channels:
     mezzo:
-        plugin: onlytv
-        name: Mezzo
-        page_url: http://only-tv.org/mezzo.html
-        logo_url: http://only-tv.org/images/mezzo.png
+      plugin: teliklive
+      title: Mezzo Live HD
+      page_url: https://telik.live/mezzo-live-hd.html
+      logo_url: https://telik.live/images/mezzo-live-hd.png
 ```
 
 USAGE

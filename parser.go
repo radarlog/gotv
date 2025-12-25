@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	onlytv "github.com/radarlog/gotv/plugins"
+	teliklive "github.com/radarlog/gotv/plugins/teliklive"
 )
 
 func (c *config) parse() (channels GoTv) {
@@ -27,10 +27,10 @@ func (c *config) parse() (channels GoTv) {
 
 func (c *channel) findStream() (streamUrl string) {
 	switch c.Plugin {
-	case "onlytv":
-		streamUrl = onlytv.FindStream(c.PageUrl)
+	case "teliklive":
+		streamUrl = teliklive.FindStream(c.PageUrl)
 	default:
-		log.Fatalf("config: Channel %s has invalid `source`", c.Title)
+		log.Fatalf("config: Channel %s has unknown `source`", c.Title)
 	}
 
 	return
